@@ -130,7 +130,6 @@ out
 .pnp.*
 
 # Diretórios de build/produção
-dist/
 build/
 
 # Vite
