@@ -135,6 +135,8 @@ function removeTask(taskId) {
         renderTasks();
     }
 }
-addTaskButton.addEventListener("click", addTask);
-loadTasksFromLocalStorage();
-renderTasks();
+document.addEventListener("DOMContentLoaded", () => {
+    addTaskButton.addEventListener("click", addTask);
+    loadTasksFromLocalStorage();
+    renderTasks();
+});

@@ -179,7 +179,9 @@ function removeTask(taskId: number) {
   }
 }
 
-addTaskButton.addEventListener("click", addTask);
+document.addEventListener("DOMContentLoaded", () => {
+  addTaskButton.addEventListener("click", addTask);
 
-loadTasksFromLocalStorage();
-renderTasks();
+  loadTasksFromLocalStorage();
+  renderTasks();
+});
