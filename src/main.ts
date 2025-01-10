@@ -22,7 +22,11 @@ const pendingTasksContainer = document.getElementById(
 ) as HTMLUListElement;
 
 function renderTasks() {
-  pendingTasksContainer.innerHTML = ""; // Limpa a lista antes de renderizar novamente
+  pendingTasksContainer.innerHTML = "";
+  const completedTasksContainer = document.getElementById(
+    "completed-tasks"
+  ) as HTMLUListElement;
+  completedTasksContainer.innerHTML = "";
 
   tasks
     .filter((task) => !task.completed)
@@ -30,12 +34,51 @@ function renderTasks() {
       const taskItem = document.createElement("li");
       taskItem.classList.add("task-item");
       taskItem.innerHTML = `
-          <div>
-            <strong>${task.title}</strong>
-            <p>${task.description}</p>
-          </div>
-        `;
+        <div class="task-content">
+          <strong>${task.title}</strong>
+          <p>${task.description}</p>
+        </div>
+        <div class="task-actions">
+          <button class="mark-complete-btn">✔</button>
+          <button class="remove-task-btn">❌</button>
+        </div>
+      `;
+
+      taskItem
+        .querySelector(".mark-complete-btn")
+        ?.addEventListener("click", () => markAsComplete(task.id));
+
+      taskItem
+        .querySelector(".remove-task-btn")
+        ?.addEventListener("click", () => removeTask(task.id));
+
       pendingTasksContainer.appendChild(taskItem);
+    });
+
+  tasks
+    .filter((task) => task.completed)
+    .forEach((task) => {
+      const taskItem = document.createElement("li");
+      taskItem.classList.add("task-item");
+      taskItem.innerHTML = `
+        <div class="task-content">
+          <strong>${task.title}</strong>
+          <p>${task.description}</p>
+        </div>
+        <div class="task-actions">
+          <button class="mark-pending-btn">⏪</button>
+          <button class="remove-task-btn">❌</button>
+        </div>
+      `;
+
+      taskItem
+        .querySelector(".mark-pending-btn")
+        ?.addEventListener("click", () => markAsPending(task.id));
+      taskItem
+        .querySelector(".remove-task-btn")
+        ?.addEventListener("click", () => removeTask(task.id));
+
+      completedTasksContainer.appendChild(taskItem);
     });
 }
 
@@ -61,6 +104,30 @@ function addTask() {
   taskDescInput.value = "";
 
   renderTasks();
+}
+
+function markAsComplete(taskId: number) {
+  const task = tasks.find((task) => task.id === taskId);
+  if (task) {
+    task.completed = true;
+    renderTasks();
+  }
+}
+
+function markAsPending(taskId: number) {
+  const task = tasks.find((task) => task.id === taskId);
+  if (task) {
+    task.completed = false;
+    renderTasks();
+  }
+}
+
+function removeTask(taskId: number) {
+  const index = tasks.findIndex((task) => task.id === taskId);
+  if (index !== -1) {
+    tasks.splice(index, 1);
+    renderTasks();
+  }
 }
 
 addTaskButton.addEventListener("click", addTask);
