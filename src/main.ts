@@ -21,6 +21,17 @@ const pendingTasksContainer = document.getElementById(
   "pending-tasks"
 ) as HTMLUListElement;
 
+function loadTasksFromLocalStorage() {
+  const storedTasks = localStorage.getItem("tasks");
+  if (storedTasks) {
+    tasks.push(...JSON.parse(storedTasks));
+  }
+}
+
+function saveTasksToLocalStorage() {
+  localStorage.setItem("tasks", JSON.stringify(tasks));
+}
+
 function renderTasks() {
   pendingTasksContainer.innerHTML = "";
   const completedTasksContainer = document.getElementById(
@@ -137,6 +148,7 @@ function addTask() {
   taskTitleInput.value = "";
   taskDescInput.value = "";
 
+  saveTasksToLocalStorage();
   renderTasks();
 }
 
@@ -144,6 +156,7 @@ function markAsComplete(taskId: number) {
   const task = tasks.find((task) => task.id === taskId);
   if (task) {
     task.completed = true;
+    saveTasksToLocalStorage();
     renderTasks();
   }
 }
@@ -152,6 +165,7 @@ function markAsPending(taskId: number) {
   const task = tasks.find((task) => task.id === taskId);
   if (task) {
     task.completed = false;
+    saveTasksToLocalStorage();
     renderTasks();
   }
 }
@@ -160,8 +174,12 @@ function removeTask(taskId: number) {
   const index = tasks.findIndex((task) => task.id === taskId);
   if (index !== -1) {
     tasks.splice(index, 1);
+    saveTasksToLocalStorage();
     renderTasks();
   }
 }
 
 addTaskButton.addEventListener("click", addTask);
+
+loadTasksFromLocalStorage();
+renderTasks();

@@ -1,7 +1,7 @@
 body {
   font-family: Arial, sans-serif;
   margin: 0;
-  padding: 0;
+  padding: 10px;
   display: flex;
   justify-content: center;
   align-items: flex-start;
@@ -13,6 +13,7 @@ body {
 #app {
   max-width: 800px;
   margin: 20px auto;
+  padding: 10px;
 }
 
 .task-form {
@@ -27,6 +28,7 @@ body {
   justify-content: space-between;
   gap: 20px;
   text-align: center;
+  flex-direction: column;
 }
 
 .task-list {
@@ -35,6 +37,7 @@ body {
   padding: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   flex: 1;
+  margin-bottom: 20px;
 }
 
 .task-list h2 {
@@ -146,4 +149,20 @@ button:hover {
 
 .expand-desc-btn:hover {
   color: #007bff;
+}
+
+@media (min-width: 600px) {
+  .lists-container {
+    flex-direction: row;
+  }
+
+  .task-list {
+    margin-bottom: 0;
+  }
+}
+
+@media (min-width: 800px) {
+  #app {
+    max-width: 800px;
+  }
 }
