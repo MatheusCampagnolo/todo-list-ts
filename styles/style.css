@@ -53,7 +53,7 @@ button {
 }
 
 button {
-  background-color: #007bff; 
+  background-color: #007bff;
   color: white;
   cursor: pointer;
   border: none;
@@ -70,22 +70,36 @@ button:hover {
   border-radius: 8px;
   margin-bottom: 10px;
   padding: 20px;
-  position: relative; 
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: all 0.3s ease;
+  overflow: hidden;
+  min-height: 35px;
+}
+
+.task-description {
+  display: none;
+  margin-top: 10px;
+  color: #ddd;
+}
+
+.task-item.expanded .task-description {
+  display: block; 
 }
 
 .task-content {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-bottom: 40px; 
+  flex-grow: 1;
+  overflow: hidden;
 }
 
 .task-actions {
   position: absolute;
-  bottom: 10px;
+  bottom: 5px;
   right: 10px;
   display: flex;
-  gap: 10px;
+  gap: 5px;
 }
 
 .mark-complete-btn,
@@ -106,3 +120,30 @@ button:hover {
   background-color: rgba(0, 0, 0, 0.2);
 }
 
+.task-actions button {
+  width: 25px;
+  height: 25px;
+  font-size: 14px;
+  background-color: rgba(0, 0, 0, 0.1);
+  color: white;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  border-radius: 4px;
+}
+
+.task-actions button:hover {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.expand-desc-btn {
+  font-size: 16px;
+  background-color: transparent;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.expand-desc-btn:hover {
+  color: #007bff;
+}

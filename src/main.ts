@@ -34,20 +34,27 @@ function renderTasks() {
       const taskItem = document.createElement("li");
       taskItem.classList.add("task-item");
       taskItem.innerHTML = `
-        <div class="task-content">
-          <strong>${task.title}</strong>
-          <p>${task.description}</p>
-        </div>
-        <div class="task-actions">
-          <button class="mark-complete-btn">✔</button>
-          <button class="remove-task-btn">❌</button>
-        </div>
-      `;
+      <div class="task-content">
+        <strong>${task.title}</strong>
+        <p class="task-description">${task.description}</p>
+      </div>
+      <div class="task-actions">
+        <button class="expand-desc-btn">⬇</button>
+        <button class="edit-task-btn">✏</button>
+        <button class="mark-complete-btn">✔</button>
+        <button class="remove-task-btn">❌</button>
+      </div>
+    `;
 
+      taskItem
+        .querySelector(".expand-desc-btn")
+        ?.addEventListener("click", () => toggleDescription(taskItem));
+      taskItem
+        .querySelector(".edit-task-btn")
+        ?.addEventListener("click", () => editTask(task.id));
       taskItem
         .querySelector(".mark-complete-btn")
         ?.addEventListener("click", () => markAsComplete(task.id));
-
       taskItem
         .querySelector(".remove-task-btn")
         ?.addEventListener("click", () => removeTask(task.id));
@@ -61,16 +68,20 @@ function renderTasks() {
       const taskItem = document.createElement("li");
       taskItem.classList.add("task-item");
       taskItem.innerHTML = `
-        <div class="task-content">
-          <strong>${task.title}</strong>
-          <p>${task.description}</p>
-        </div>
-        <div class="task-actions">
-          <button class="mark-pending-btn">⏪</button>
-          <button class="remove-task-btn">❌</button>
-        </div>
-      `;
+      <div class="task-content">
+        <strong>${task.title}</strong>
+        <p class="task-description">${task.description}</p>
+      </div>
+      <div class="task-actions">
+        <button class="expand-desc-btn">⬇</button>
+        <button class="mark-pending-btn">⏪</button>
+        <button class="remove-task-btn">❌</button>
+      </div>
+    `;
 
+      taskItem
+        .querySelector(".expand-desc-btn")
+        ?.addEventListener("click", () => toggleDescription(taskItem));
       taskItem
         .querySelector(".mark-pending-btn")
         ?.addEventListener("click", () => markAsPending(task.id));
@@ -80,6 +91,29 @@ function renderTasks() {
 
       completedTasksContainer.appendChild(taskItem);
     });
+}
+
+function toggleDescription(taskItem: HTMLElement) {
+  const isExpanded = taskItem.classList.contains("expanded");
+
+  if (isExpanded) {
+    taskItem.classList.remove("expanded");
+  } else {
+    taskItem.classList.add("expanded");
+  }
+}
+
+function editTask(taskId: number) {
+  const task = tasks.find((t) => t.id === taskId);
+  if (!task) return;
+
+  const newTitle = prompt("Edit Task Title:", task.title);
+  const newDescription = prompt("Edit Task Description:", task.description);
+
+  if (newTitle !== null) task.title = newTitle;
+  if (newDescription !== null) task.description = newDescription;
+
+  renderTasks();
 }
 
 function addTask() {
