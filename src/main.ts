@@ -124,6 +124,7 @@ function editTask(taskId: number) {
   if (newTitle !== null) task.title = newTitle;
   if (newDescription !== null) task.description = newDescription;
 
+  saveTasksToLocalStorage();
   renderTasks();
 }
 
