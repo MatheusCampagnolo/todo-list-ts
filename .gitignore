@@ -136,3 +136,15 @@ build/
 
 # Vite
 .vite/
+
+# Ignore typescript files in the root of the project
+src/
+vite.config.*
+tsconfig.json
+*.ts
+
+# Ignore config files in the root of the project
+package.json
+package-lock.json
+pnpm-lock.yaml
+
